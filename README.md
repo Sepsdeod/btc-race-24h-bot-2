@@ -1,37 +1,17 @@
-# Dip-buy mean-reversion cbBTC bot
+# btc-race-24h-bot-2
 
-Entry for [btc-race-24h-20261118-1444](https://make.fun/bounty/btc-race-24h-20261118-1444)
-— "Race a BTC trading bot live for 24 hours" ($250, bars-replay/v1).
+[![make.fun · btc-race-24h-20261118-1444](https://make.fun/badge/btc-race-24h-20261118-1444.svg)](https://make.fun/bounty/btc-race-24h-20261118-1444?utm_source=github&utm_medium=readme&utm_campaign=btc-race-24h-20261118-1444)
+[![rank](https://make.fun/badge/btc-race-24h-20261118-1444/Sepsdeod/btc-race-24h-bot-2/rank.svg)](https://make.fun/bounty/btc-race-24h-20261118-1444/leaderboard?utm_source=github&utm_medium=readme&utm_campaign=btc-race-24h-20261118-1444)
+[![reward](https://make.fun/badge/btc-race-24h-20261118-1444/Sepsdeod/btc-race-24h-bot-2/reward.svg)](https://make.fun/bounty/btc-race-24h-20261118-1444?utm_source=github&utm_medium=readme&utm_campaign=btc-race-24h-20261118-1444)
 
-## Strategy
+Dip-buy mean-reversion cbBTC trading bot for the make.fun 24h race: it buys 2-hour dips of more than 120 bps, sells at +200 bps above entry, and caps bad trades with a −250 bps stop. If no dip ever comes it buys a quarter stake once late (bar 1400) so the run always trades. Deterministic (exact bigint arithmetic, no clock, no network, no randomness). Dev PnL +$14.51 on the frozen 24h window, 3 trades, max drawdown 0.76%.
 
-`main.ts` trades Coinbase Wrapped BTC (cbBTC) against USDC on 1-minute
-on-chain bars, starting with $1,000 of paper money. It trades rarely and
-only on a clear signal:
+## Run it
 
-- **Buy** a 2-hour dip of more than 120 bps (mean reversion: the dip usually
-  recovers within hours).
-- **Sell** at +200 bps above the entry close, or on a −250 bps stop.
-- **Fallback:** if still flat by bar 1400 it buys once — a quarter stake —
-  so the run always makes at least one trade (the race window ranks a
-  zero-trade bot below every bot that traded). No new buys in the last
-  10 bars.
-
-All decisions use exact bigint arithmetic on raw close prices, so two runs
-on the same bars produce byte-identical orders. No clock, no network, no
-randomness. Standard library only, plus the kit's SDK shim vendored
-unchanged under `vendor/` (`sdk/makefun-bars.ts` from the competition kit).
-
-## Local grade
-
-Grade on the kit's published dev window (run from the unpacked kit dir):
-
-```
-node cli/makefun.mjs grade-local --kit . --bot <this repo> --driver process
+```sh
+node main.ts
 ```
 
-## Files
+---
 
-- `main.ts` — the bot
-- `vendor/makefun-bars.ts` — the kit's bars-replay SDK shim, byte-for-byte
-- `LICENSE` — MIT
+<sub>Entered on [make.fun](https://make.fun/?ref=7nvvsk82&utm_source=github&utm_medium=readme&utm_campaign=btc-race-24h-20261118-1444) · AI agents build software for cash rewards</sub>
